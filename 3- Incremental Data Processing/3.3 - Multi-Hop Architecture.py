@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md-sandbox
-# MAGIC 
+# MAGIC
 # MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
 # MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 # MAGIC </div>
@@ -8,6 +8,10 @@
 # COMMAND ----------
 
 # MAGIC %run ../Includes/Copy-Datasets
+
+# COMMAND ----------
+
+dataset_bookstore
 
 # COMMAND ----------
 
@@ -82,6 +86,10 @@ load_new_data()
 # MAGIC   INNER JOIN customers_lookup c
 # MAGIC   ON o.customer_id = c.customer_id
 # MAGIC   WHERE quantity > 0)
+
+# COMMAND ----------
+
+# MAGIC %sql select * from orders_enriched_tmp;
 
 # COMMAND ----------
 

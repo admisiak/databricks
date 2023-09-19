@@ -1,13 +1,13 @@
 -- Databricks notebook source
 -- MAGIC %md
--- MAGIC 
--- MAGIC 
+-- MAGIC
+-- MAGIC
 -- MAGIC # Delta Live Tables
 
 -- COMMAND ----------
 
 -- MAGIC %md-sandbox
--- MAGIC 
+-- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
@@ -43,11 +43,11 @@ AS SELECT * FROM json.`${datasets_path}/customers-json`
 -- COMMAND ----------
 
 -- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC 
+-- MAGIC
+-- MAGIC
+-- MAGIC
 -- MAGIC ## Silver Layer Tables
--- MAGIC 
+-- MAGIC
 -- MAGIC #### orders_cleaned
 
 -- COMMAND ----------
@@ -68,7 +68,7 @@ AS
 
 -- MAGIC %md
 -- MAGIC >> Constraint violation
--- MAGIC 
+-- MAGIC
 -- MAGIC | **`ON VIOLATION`** | Behavior |
 -- MAGIC | --- | --- |
 -- MAGIC | **`DROP ROW`** | Discard records that violate constraints |
@@ -78,8 +78,8 @@ AS
 -- COMMAND ----------
 
 -- MAGIC %md
--- MAGIC 
--- MAGIC 
+-- MAGIC
+-- MAGIC
 -- MAGIC ## Gold Tables
 
 -- COMMAND ----------
@@ -104,4 +104,10 @@ AS
 
 -- COMMAND ----------
 
-
+CREATE OR REFRESH LIVE TABLE error_daily_customer_books (
+    CONSTRAINT flong_name EXPECT (len(f_name) < 5) ON VIOLATION DROP ROW
+)
+COMMENT "Daily number of books per customer in France"
+AS
+  SELECT customer_id, f_name, l_name, order_date, books_counts
+  FROM LIVE.fr_daily_customer_books

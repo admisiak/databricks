@@ -40,15 +40,20 @@ DROP TABLE external_default
 
 -- COMMAND ----------
 
-CREATE SCHEMA new_default
+CREATE SCHEMA adam_cert.new_default
 
 -- COMMAND ----------
 
-DESCRIBE DATABASE EXTENDED new_default
+DESCRIBE DATABASE EXTENDED adam_cert.new_default
 
 -- COMMAND ----------
 
-USE new_default;
+USE adam_cert.new_default;
+Drop table managed_new_default;
+
+-- COMMAND ----------
+
+USE adam_cert.new_default;
 
 CREATE TABLE managed_new_default
   (width INT, length INT, height INT);
@@ -58,9 +63,12 @@ VALUES (3 INT, 2 INT, 1 INT);
 
 -----------------------------------
 
+CREATE EXTERNAL LOCATION external_adam
+URL 's3:/adam-987654321';
+
 CREATE TABLE external_new_default
   (width INT, length INT, height INT)
-LOCATION 'dbfs:/mnt/demo/external_new_default';
+LOCATION external_adam;
   
 INSERT INTO external_new_default
 VALUES (3 INT, 2 INT, 1 INT);
@@ -88,8 +96,7 @@ DROP TABLE external_new_default;
 
 -- COMMAND ----------
 
-CREATE SCHEMA custom
-LOCATION 'dbfs:/Shared/schemas/custom.db'
+CREATE SCHEMA adam_cert.custom MANAGED LOCATION 's3://adam-987654321'
 
 -- COMMAND ----------
 

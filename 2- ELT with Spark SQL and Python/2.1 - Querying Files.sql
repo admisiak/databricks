@@ -1,6 +1,6 @@
 -- Databricks notebook source
 -- MAGIC %md-sandbox
--- MAGIC 
+-- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
@@ -120,7 +120,7 @@ SELECT * FROM books_unparsed;
 
 -- COMMAND ----------
 
-CREATE TEMP VIEW books_tmp_vw
+CREATE or replace TEMP VIEW books_tmp_vw
    (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
 USING CSV
 OPTIONS (
@@ -129,14 +129,18 @@ OPTIONS (
   delimiter = ";"
 );
 
-CREATE TABLE books AS
-  SELECT * FROM books_tmp_vw;
-  
-SELECT * FROM books
 
 -- COMMAND ----------
 
-DESCRIBE EXTENDED books
+
+CREATE or replace TABLE adam_cert.getindata.books AS
+  SELECT * FROM books_tmp_vw;
+  
+SELECT * FROM adam_cert.getindata.books
+
+-- COMMAND ----------
+
+DESCRIBE EXTENDED adam_cert.getindata.books
 
 -- COMMAND ----------
 

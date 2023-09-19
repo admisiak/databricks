@@ -1,8 +1,15 @@
 -- Databricks notebook source
-CREATE TABLE employees
+CREATE DATABASE adam_cert.getindata;
+
+-- COMMAND ----------
+
+USE getindata;
+CREATE TABLE adam_cert.getindata.employees
   (id INT, name STRING, salary DOUBLE);
 
 -- COMMAND ----------
+
+USE adam_cert.getindata;
 
 INSERT INTO employees
 VALUES 
@@ -23,7 +30,7 @@ DESCRIBE DETAIL employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+-- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees/_delta_log'
 
 -- COMMAND ----------
 

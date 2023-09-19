@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md-sandbox
-# MAGIC 
+# MAGIC
 # MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
 # MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 # MAGIC </div>
@@ -11,14 +11,19 @@
 
 # COMMAND ----------
 
+
+
+# COMMAND ----------
+
 (spark.readStream
-      .table("books")
+      .table("adam_cert.getindata.books")
       .createOrReplaceTempView("books_streaming_tmp_vw")
 )
 
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC USE adam_cert.getindata;
 # MAGIC SELECT * FROM books_streaming_tmp_vw
 
 # COMMAND ----------

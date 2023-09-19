@@ -4,7 +4,7 @@ DESCRIBE HISTORY employees
 -- COMMAND ----------
 
 SELECT * 
-FROM employees VERSION AS OF 1
+FROM employees@V2
 
 -- COMMAND ----------
 

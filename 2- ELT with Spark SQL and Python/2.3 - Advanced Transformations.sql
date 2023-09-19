@@ -24,7 +24,7 @@ FROM customers
 
 -- COMMAND ----------
 
-SELECT from_json(profile) AS profile_struct
+SELECT from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
   FROM customers;
 
 -- COMMAND ----------
@@ -66,14 +66,14 @@ FROM orders
 -- COMMAND ----------
 
 SELECT order_id, customer_id, explode(books) AS book 
-FROM orders
+FROM orders where customer_id="C00005"
 
 -- COMMAND ----------
 
 SELECT customer_id,
   collect_set(order_id) AS orders_set,
   collect_set(books.book_id) AS books_set
-FROM orders
+FROM orders where customer_id = "C00005"
 GROUP BY customer_id
 
 -- COMMAND ----------
@@ -81,7 +81,7 @@ GROUP BY customer_id
 SELECT customer_id,
   collect_set(books.book_id) As before_flatten,
   array_distinct(flatten(collect_set(books.book_id))) AS after_flatten
-FROM orders
+FROM orders where customer_id = "C00005"
 GROUP BY customer_id
 
 -- COMMAND ----------
@@ -127,11 +127,12 @@ SELECT * FROM (
     book.book_id AS book_id,
     book.quantity AS quantity
   FROM orders_enriched
-) PIVOT (
-  sum(quantity) FOR book_id in (
-    'B01', 'B02', 'B03', 'B04', 'B05', 'B06',
-    'B07', 'B08', 'B09', 'B10', 'B11', 'B12'
-  )
-);
+) 
+-- PIVOT (
+--   sum(quantity) FOR book_id in (
+--     'B01', 'B02', 'B03', 'B04', 'B05', 'B06',
+--     'B07', 'B08', 'B09', 'B10', 'B11', 'B12'
+--   )
+-- );
 
-SELECT * FROM transactions
+-- SELECT * FROM transactions
